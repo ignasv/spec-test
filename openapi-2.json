@@ -1,0 +1,494 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Partner Integration",
+    "version": "1.0.0",
+    "description": "API for generating matches based on partner's provided data."
+  },
+  "paths": {
+    "/integration/generate-matches": {
+      "post": {
+        "summary": "Generate matches",
+        "operationId": "generateMatches",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerateMatchesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully generated matches",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerateMatchesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GenerateMatchesRequest": {
+        "type": "object",
+        "properties": {
+          "userRef": {
+            "type": "string"
+          },
+          "how-can-we-help": {
+            "type": "object",
+            "properties": {
+              "typeOfSupport": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "Essential items (food clothing other daily needs)",
+                    "Funding for training or education",
+                    "Grant / financial help",
+                    "Health related support (equipment respite breaks carer support)",
+                    "Home improvements or household items",
+                    "Save money on bills",
+                    "Other"
+                  ]
+                }
+              },
+              "supportAndAdvice": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "Money / debt advice",
+                    "Housing support / advice",
+                    "Counselling",
+                    "Mental health support",
+                    "Legal advice",
+                    "Employment advice",
+                    "Digital skills support / training",
+                    "None of the above"
+                  ]
+                }
+              }
+            }
+          },
+          "personal-details": {
+            "type": "object",
+            "properties": {
+              "dateOfBirth": {
+                "type": "integer"
+              }
+            }
+          },
+          "address-details": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "object",
+                "properties": {
+                  "postcode": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "additional-personal-details-gender": {
+            "type": "object",
+            "properties": {
+              "gender": {
+                "type": "string",
+                "enum": [
+                  "Female",
+                  "Male",
+                  "Non-binary",
+                  "Transgender female",
+                  "Transgender male",
+                  "Prefer not to say",
+                  "Prefer to self-describe"
+                ]
+              }
+            }
+          },
+          "additional-personal-details-religion": {
+            "type": "object",
+            "properties": {
+              "religion": {
+                "type": "string",
+                "enum": [
+                  "Buddhist",
+                  "Christian (all denominations)",
+                  "Hindu",
+                  "Jewish",
+                  "Muslim",
+                  "No religion",
+                  "Sikh",
+                  "Prefer not to say",
+                  "Other"
+                ]
+              }
+            }
+          },
+          "household-details-dependent-children": {
+            "type": "object",
+            "properties": {
+              "dependentChildren": {
+                "type": "boolean"
+              },
+              "expectingChild": {
+                "type": "boolean"
+              },
+              "numberOfChildren": {
+                "type": "string",
+                "enum": [
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "6",
+                  "7",
+                  "8",
+                  "9",
+                  "10",
+                  "More than 10"
+                ]
+              }
+            }
+          },
+          "household-details-disability": {
+            "type": "object",
+            "properties": {
+              "householdDisability": {
+                "type": "boolean"
+              },
+              "disabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "Blind or have a visual impairment",
+                    "D/deaf or have a hearing impairment",
+                    "Development condition",
+                    "Learning difference",
+                    "Long-term illness or health condition",
+                    "Injury",
+                    "Mental health condition challenge or disorder",
+                    "Physical impairment mobility or dexterity issues",
+                    "Social/communication conditions",
+                    "Prefer not to say",
+                    "Terminal / life-limiting illness",
+                    "Other"
+                  ]
+                }
+              }
+            }
+          },
+          "household-details": {
+            "type": "object",
+            "properties": {
+              "partner": {
+                "type": "boolean"
+              },
+              "houseStatus": {
+                "type": "string",
+                "enum": [
+                  "Armed forces accommodation",
+                  "Boarder or lodger",
+                  "Experiencing homelessness",
+                  "Homeowner - mortgage",
+                  "Homeowner - no mortgage",
+                  "Living rent free",
+                  "Park home / static caravan / mobile home",
+                  "Renter - private landlord",
+                  "Renter - social (council/housing association)",
+                  "Supported accomodation (care/facility/hospital)",
+                  "Temporary housing",
+                  "Other"
+                ]
+              }
+            }
+          },
+          "employment-details": {
+            "type": "object",
+            "properties": {
+              "employmentStatus": {
+                "type": "string",
+                "enum": [
+                  "Apprentice",
+                  "Employed",
+                  "Not employed NOT looking for work",
+                  "Not employed looking for work",
+                  "Self-employed",
+                  "Student",
+                  "Retired",
+                  "Unable to work (due to disability or a health condition)"
+                ]
+              },
+              "servedInArmedForces": {
+                "type": "boolean"
+              }
+            }
+          },
+          "employment-details-occupation": {
+            "type": "object",
+            "properties": {
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "Armed Forces / Veterans",
+                    "Book Trade (Publishing Selling Production Distribution Bookbinding/Restoration)",
+                    "British Horse Racing / Thoroughbred Breeding",
+                    "Electrical sector (Electrician Engineer Apprentice Energy etc)",
+                    "Newspaper and Magazine Sales and Distribution (retail wholesale circulation)",
+                    "Teaching / Education",
+                    "Travel / Tourism",
+                    "Administrative / Secretarial",
+                    "Apprentice",
+                    "Arts / Culture",
+                    "Automotive / Motoring",
+                    "Bar / Pub / Casino / Nightclub",
+                    "Brewery / Distillery / Alcohol Production / Alcohol Transportation",
+                    "Building / Construction",
+                    "Care worker / Social Care",
+                    "Charity / Voluntary ",
+                    "Delivery / Post Office",
+                    "Emergency Services",
+                    "Engineering",
+                    "Entertainment / Theatre / Film",
+                    "Environment / Forestry / Horticulture / Land Management",
+                    "Facilities / Maintenance / Cleaning",
+                    "Farming / Agriculture",
+                    "Fashion / Textiles",
+                    "Financial Services",
+                    "Fishing",
+                    "Food / Beverage",
+                    "Freemason",
+                    "Government / Local Authority",
+                    "Hair / Beauty",
+                    "Healthcare",
+                    "Hospitality",
+                    "Information Technology / Communication",
+                    "Law",
+                    "Law Enforcement / Security",
+                    "Leisure",
+                    "Management / Commerce",
+                    "Manufacturing",
+                    "Maritime / Seafaring",
+                    "Mining / Quarrying",
+                    "News / Media / Publishing",
+                    "Plumbing / Heating",
+                    "PR / Marketing",
+                    "Professional Services",
+                    "Religious / Clergy ",
+                    "Retail",
+                    "Sales / Wholesale",
+                    "Scientist",
+                    "Social Worker",
+                    "Sport / Fitness",
+                    "Trade Union Membership",
+                    "Tradesperson / Craftsperson",
+                    "Transport",
+                    "Veterinary"
+                  ]
+                }
+              }
+            }
+          },
+          "application-circumstances-household": {
+            "type": "object",
+            "properties": {
+              "householdCircumstances": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "Can’t afford essential travel costs (e.g. work school hospital visits)",
+                    "Extra communication needs (e.g. can't speak or read English well)",
+                    "Lack digital access",
+                    "Lack of basic essentials (e.g. food heating household items)",
+                    "Refugee asylum seeker or undocumented migrant",
+                    "Significant change in circumstances",
+                    "Substance or alcohol misuse",
+                    "Sudden change / decline in health",
+                    "Victim of a crime",
+                    "None of the above"
+                  ]
+                }
+              },
+              "relationshipCircumstances": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "Bereavement",
+                    "Children at risk of being taken into care",
+                    "Domestic / financial abuse",
+                    "Experiencing isolation / loneliness",
+                    "Relationship breakdown / divorce",
+                    "Unpaid carer to family / friend",
+                    "None of the above"
+                  ]
+                }
+              },
+              "housingCircumstances": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "My home is unsafe / unsuitable",
+                    "Experiencing or at risk of abuse in my home",
+                    "Require support to stay in my home or community",
+                    "Change in living situation or leaving care / sheltered housing",
+                    "Need furniture / changes to my home",
+                    "Experiencing homelessness or at risk of losing my home",
+                    "None of the above"
+                  ]
+                }
+              }
+            }
+          },
+          "application-circumstances": {
+            "type": "object",
+            "properties": {
+              "homeEnergyCosts": {
+                "type": "boolean"
+              },
+              "waterCosts": {
+                "type": "boolean"
+              },
+              "rentingOrHouseCosts": {
+                "type": "boolean"
+              },
+              "councilTaxCosts": {
+                "type": "boolean"
+              },
+              "loanCosts": {
+                "type": "boolean"
+              }
+            }
+          },
+          "finance-benefits": {
+            "type": "object",
+            "properties": {
+              "appliedForBenefits": {
+                "type": "boolean"
+              },
+              "receiptOfBenefits": {
+                "type": "boolean"
+              }
+            }
+          },
+          "finance-income": {
+            "type": "object",
+            "properties": {
+              "income": {
+                "type": "boolean"
+              }
+            }
+          },
+          "finance-saving": {
+            "type": "object",
+            "properties": {
+              "savings": {
+                "type": "string",
+                "enum": [
+                  "£0-£1000",
+                  "£1001-£1500",
+                  "£1501-£2000",
+                  "£2001-£2500",
+                  "£2501-£3000",
+                  "£3001-£3500",
+                  "£3501-£4000",
+                  "£4001-£5000",
+                  "£5001-£6000",
+                  "£6001-£7000",
+                  "£7001-£8000",
+                  "£8001-£10000",
+                  "£10001-£12000",
+                  "£12001-£15000",
+                  "£15001-£20000",
+                  "Over £20000"
+                ]
+              }
+            }
+          },
+          "application-advice-support": {
+            "type": "object",
+            "properties": {
+              "recievedFinancialAdvice": {
+                "type": "boolean"
+              },
+              "supportedBySupportWorker": {
+                "type": "boolean"
+              }
+            }
+          },
+          "other-grants": {
+            "type": "object",
+            "properties": {
+              "otherGrants": {
+                "type": "boolean"
+              }
+            }
+          },
+          "special-category-consent": {
+            "type": "object",
+            "properties": {
+              "specialCategoryConsent": {
+                "type": "string",
+                "enum": [
+                  "Yes show me all support available",
+                  "No exclude my sensitive personal information"
+                ]
+              }
+            }
+          },
+          "partnerName": {
+            "type": "string"
+          }
+        }
+      },
+      "GenerateMatchesResponse": {
+        "type": "object",
+        "properties": {
+          "matches": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "grantName": {
+                  "type": "string"
+                },
+                "charityName": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "count": {
+            "type": "integer"
+          },
+          "callbackUrl": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
