@@ -1,0 +1,379 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Application Form Submission API",
+    "description": "API for submitting application forms with various personal and financial details.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/applications": {
+      "post": {
+        "summary": "Submit application form",
+        "description": "Submits a complete application form with personal, household, employment, financial details, and reasons for application.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "personalDetails": {
+                    "$ref": "#/components/schemas/PersonalDetails"
+                  },
+                  "addressDetails": {
+                    "$ref": "#/components/schemas/AddressDetails"
+                  },
+                  "nationalityAndResidence": {
+                    "$ref": "#/components/schemas/NationalityAndResidence"
+                  },
+                  "additionalPersonalDetails": {
+                    "$ref": "#/components/schemas/AdditionalPersonalDetails"
+                  },
+                  "householdDetails": {
+                    "$ref": "#/components/schemas/HouseholdDetails"
+                  },
+                  "employmentDetails": {
+                    "$ref": "#/components/schemas/EmploymentDetails"
+                  },
+                  "reasonForApplication": {
+                    "$ref": "#/components/schemas/ReasonForApplication"
+                  },
+                  "financeDetails": {
+                    "$ref": "#/components/schemas/FinanceDetails"
+                  },
+                  "otherGrants": {
+                    "$ref": "#/components/schemas/OtherGrants"
+                  }
+                },
+                "required": [
+                  "personalDetails",
+                  "addressDetails",
+                  "nationalityAndResidence",
+                  "additionalPersonalDetails",
+                  "householdDetails",
+                  "employmentDetails",
+                  "reasonForApplication",
+                  "financeDetails",
+                  "otherGrants"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application form submitted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Application submitted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, details missing or incorrect"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PersonalDetails": {
+        "type": "object",
+        "required": [
+          "title",
+          "firstName",
+          "lastName",
+          "dateOfBirth"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "enum": [
+              "Dr",
+              "Mr",
+              "Mrs",
+              "Miss",
+              "Ms",
+              "Other"
+            ]
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "middleName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "AddressDetails": {
+        "type": "object",
+        "required": [
+          "address"
+        ],
+        "properties": {
+          "address": {
+            "type": "object",
+            "required": [
+              "addressOne",
+              "town",
+              "postcode"
+            ],
+            "properties": {
+              "addressOne": {
+                "type": "string"
+              },
+              "addressTwo": {
+                "type": "string"
+              },
+              "town": {
+                "type": "string"
+              },
+              "postcode": {
+                "type": "string",
+                "pattern": "^([A-Za-z][A-HJ-Ya-hj-y]?\\\\d[A-Za-z\\\\d]? ?\\\\d[A-Za-z]{2}|GIR ?0A{2})$"
+              },
+              "country": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "NationalityAndResidence": {
+        "type": "object",
+        "required": [
+          "ukResident",
+          "britishNational"
+        ],
+        "properties": {
+          "ukResident": {
+            "type": "boolean"
+          },
+          "britishNational": {
+            "type": "boolean"
+          },
+          "nationality": {
+            "type": "string",
+            "enum": [
+              "Afghan",
+              "Albanian",
+              "Algerian",
+              "..."
+            ]
+          }
+        }
+      },
+      "AdditionalPersonalDetails": {
+        "type": "object",
+        "properties": {
+          "gender": {
+            "type": "string",
+            "enum": [
+              "Female",
+              "Male",
+              "Transgender female",
+              "Transgender male",
+              "Non-binary",
+              "Prefer not to say",
+              "Prefer to self-describe"
+            ]
+          },
+          "genderOther": {
+            "type": "string"
+          }
+        }
+      },
+      "HouseholdDetails": {
+        "type": "object",
+        "required": [
+          "partner",
+          "houseStatus"
+        ],
+        "properties": {
+          "partner": {
+            "type": "boolean"
+          },
+          "houseStatus": {
+            "type": "string",
+            "enum": [
+              "Homeowner outright",
+              "Homeowner with mortgage",
+              "Homeless",
+              "..."
+            ]
+          }
+        }
+      },
+      "EmploymentDetails": {
+        "type": "object",
+        "required": [
+          "employmentStatus",
+          "servedInArmedForces"
+        ],
+        "properties": {
+          "employmentStatus": {
+            "type": "string",
+            "enum": [
+              "Employed",
+              "Self-employed",
+              "Not employed",
+              "looking for work",
+              "..."
+            ]
+          },
+          "servedInArmedForces": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ReasonForApplication": {
+        "type": "object",
+        "required": [
+          "reasons",
+          "requiredSupport"
+        ],
+        "properties": {
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "At risk of losing my home",
+                "Bereavement",
+                "Change in living situation",
+                "Domestic abuse",
+                "Financial abuse",
+                "In debts / arrears",
+                "My income doesn't cover my expenses",
+                "Relationship breakdown (partner or family)",
+                "Unemployment / redundancy",
+                "Unexpected illness or injury",
+                "Unexpected loss of income",
+                "Other"
+              ]
+            }
+          },
+          "requiredSupport": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Benefits support / advice",
+                "Carer's support / information",
+                "Clothing support",
+                "Council tax support",
+                "Counselling (e.g.",
+                "for partner or family relationships)",
+                "Debt advice",
+                "Debts / arrears payment support",
+                "Disability",
+                "health or mental health advice / support",
+                "Employment support / advice",
+                "Energy / utility bills support",
+                "Food support",
+                "Funeral costs",
+                "General living costs",
+                "Housing advice",
+                "Legal advice",
+                "New appliance / furniture",
+                "New equipment / clothing for children",
+                "Rent / mortgage payment support",
+                "Training or education support",
+                "Other"
+              ]
+            }
+          }
+        }
+      },
+      "FinanceDetails": {
+        "type": "object",
+        "required": [
+          "receiptOfBenefits",
+          "appliedForBenefits",
+          "income",
+          "savings",
+          "debts"
+        ],
+        "properties": {
+          "receiptOfBenefits": {
+            "type": "boolean"
+          },
+          "appliedForBenefits": {
+            "type": "boolean"
+          },
+          "income": {
+            "type": "boolean"
+          },
+          "savings": {
+            "type": "string",
+            "enum": [
+              "£0-£1",
+              0,
+              "£1",
+              "001-£1",
+              500,
+              "... Over £20",
+              0
+            ]
+          },
+          "debts": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OtherGrants": {
+        "type": "object",
+        "required": [
+          "otherGrants"
+        ],
+        "properties": {
+          "otherGrants": {
+            "type": "boolean"
+          },
+          "grants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "organisation",
+                "outcome"
+              ],
+              "properties": {
+                "organisation": {
+                  "type": "string"
+                },
+                "outcome": {
+                  "type": "string",
+                  "enum": [
+                    "Awaiting decision",
+                    "Successful",
+                    "Not successful"
+                  ]
+                },
+                "amount": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
